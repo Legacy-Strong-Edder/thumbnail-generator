@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thumbnail Generator - VEON Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #101828 0%, #1a2332 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #ffffff;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #75BF80;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #b0b8c1;
+        }
+
+        .form-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(117, 191, 128, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-section h2 {
+            color: #75BF80;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .label-hint {
+            font-size: 0.8rem;
+            color: #75BF80;
+            margin-top: 4px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(117, 191, 128, 0.3);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #75BF80;
+            box-shadow: 0 0 0 3px rgba(117, 191, 128, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .toggle-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(117, 191, 128, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: #75BF80;
+            color: #101828;
+            border-color: #75BF80;
+        }
+
+        .toggle-btn:hover {
+            border-color: #75BF80;
+        }
+
+        .image-preview {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(117, 191, 128, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #b0b8c1;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 6px;
+        }
+
+        .color-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 45px;
+            border: 1px solid rgba(117, 191, 128, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .button-group {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #75BF80 0%, #5fa66f 100%);
+            color: #101828;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(117, 191, 128, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #75BF80;
+            border: 1px solid #75BF80;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(117, 191, 128, 0.1);
+        }
+
+        .result-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(117, 191, 128, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #75BF80 0%, #FFB84D 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .progress-text {
+            color: #75BF80;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .thumbnail-display {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .thumbnail-display img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid rgba(117, 191, 128, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-info {
+            background: rgba(117, 191, 128, 0.1);
+            border-left: 4px solid #75BF80;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .result-info p {
+            color: #ffffff;
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .result-info strong {
+            color: #75BF80;
+        }
+
+        .url-copy-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .url-input {
+            flex: 1 !important;
+        }
+
+        .btn-copy {
+            padding: 12px 20px !important;
+            background: #4A90E2 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-copy:hover {
+            background: #3d7bb9 !important;
+        }
+
+        .btn-download {
+            padding: 12px 20px !important;
+            background: #75BF80 !important;
+            color: #101828 !important;
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.2);
+            border-left: 4px solid #FF6B6B;
+            color: #FF6B6B;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        .success-message {
+            background: rgba(117, 191, 128, 0.2);
+            border-left: 4px solid #75BF80;
+            color: #75BF80;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .form-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .spinner {
+            border: 3px solid rgba(117, 191, 128, 0.3);
+            border-top: 3px solid #75BF80;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎬 Thumbnail Generator</h1>
+            <p>Professional YouTube thumbnails powered by AI</p>
+        </div>
+
+        <!-- Form -->
+        <form id="thumbnailForm" class="form-wrapper">
+            <!-- Video Info Section -->
+            <div class="form-section">
+                <h2>📹 Video Information</h2>
+
+                <div class="form-group">
+                    <label>Content Type</label>
+                    <div class="toggle-group">
+                        <button type="button" class="toggle-btn active" data-type="title">
+                            Specific Title
+                        </button>
+                        <button type="button" class="toggle-btn" data-type="context">
+                            Video Context
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" id="titleInput">
+                    <label>Thumbnail Title</label>
+                    <input type="text" id="title" name="title" placeholder="e.g., Thin Profiles" required>
+                    <div class="label-hint">The main text to display on thumbnail</div>
+                </div>
+
+                <div class="form-group" id="contextInput" style="display: none;">
+                    <label>Video Context</label>
+                    <textarea id="context" name="context" placeholder="Describe your video topic, main pain point, and key message..."></textarea>
+                    <div class="label-hint">AI will generate an engaging hook title based on this</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Subtitle/Keywords</label>
+                    <input type="text" id="subtitle" name="subtitle" placeholder="e.g., Young, Foreign, Repair">
+                    <div class="label-hint">Secondary text, comma-separated keywords</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Video Keywords/Topic</label>
+                    <input type="text" id="keywords" name="keywords" placeholder="e.g., Funding, Building, Solution">
+                    <div class="label-hint">For context-based generation</div>
+                </div>
+            </div>
+
+            <!-- Image & Colors Section -->
+            <div class="form-section">
+                <h2>🎨 Image & Design</h2>
+
+                <div class="form-group">
+                    <label>Select Base Image</label>
+                    <select id="baseImage" name="baseImage" required>
+                        <option value="">-- Choose an image --</option>
+                        <option value="1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS">Professional Portrait 01</option>
+                        <option value="10HTWMVsULV7MqX2LU1FdD3NZ4vtMy280">Professional Portrait 02</option>
+                        <option value="1TG6RNveJF0jB0wDO0YNQqWlnQpHQCQB-">Professional Portrait 03</option>
+                        <option value="1Tze7ZHNJDzBPI4cCOqwEpnAdWgHFAmyq">Professional Portrait 04</option>
+                        <option value="1m45LRucK5gOmNtfRj_zaEj1obOsAKOJw">Professional Portrait 05</option>
+                        <option value="1MSuATwcK22elJ1ZE3uMZd6xnXFRgsDlB">Professional Portrait 06</option>
+                        <option value="1bZZ0VyMnWxtXyBY-weeLdfTIiF-kBgTv">Professional Portrait 07</option>
+                        <option value="1Tfm_ChJorSkPvUhNArnRZcNKGSYG48cr">Professional Portrait 08</option>
+                        <option value="1YLD81LE2HsGVPq4Ut_rsNDnou7wFjLy5">Professional Portrait 09</option>
+                        <option value="1pFN1qpCqc7xQy-Ffyc4P7tV4eUT8DoCB">Professional Portrait 10</option>
+                    </select>
+                    <div class="image-preview" id="imagePreview">
+                        <span>Image preview will appear here</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Brand Colors</label>
+                    <div class="color-input-group">
+                        <div>
+                            <label style="font-size: 0.85rem; margin-bottom: 5px;">Primary Color</label>
+                            <input type="color" id="primaryColor" value="#75BF80">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.85rem; margin-bottom: 5px;">Secondary Color</label>
+                            <input type="color" id="secondaryColor" value="#FFFFFF">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <button type="submit" class="btn-primary">
+                    <span class="spinner" style="display: none;"></span>
+                    <span class="btn-text">Generate Thumbnail</span>
+                </button>
+                <button type="reset" class="btn-secondary">Clear Form</button>
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        <div id="resultSection" class="result-section">
+            <h2 style="color: #75BF80; margin-bottom: 20px;">✨ Generated Thumbnail</h2>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <div id="progressContainer" class="progress-container" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Generating thumbnail...</div>
+            </div>
+
+            <div id="thumbnailDisplay" class="thumbnail-display" style="display: none;">
+                <img id="thumbnailImg" src="" alt="Generated Thumbnail">
+            </div>
+
+            <div id="resultInfo" class="result-info" style="display: none;">
+                <p><strong>Image URL:</strong></p>
+                <div class="url-copy-group">
+                    <input type="text" id="imageUrl" class="url-input" readonly>
+                    <button type="button" class="btn-copy" onclick="copyToClipboard()">Copy URL</button>
+                </div>
+                <p style="margin-top: 15px;"><strong>Generated at:</strong> <span id="generatedTime"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('thumbnailForm');
+        const resultSection = document.getElementById('resultSection');
+        const baseImageSelect = document.getElementById('baseImage');
+        const titleInput = document.getElementById('titleInput');
+        const contextInput = document.getElementById('contextInput');
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        let contentType = 'title';
+
+        // Toggle between title and context
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                contentType = btn.dataset.type;
+
+                toggleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                if (contentType === 'title') {
+                    titleInput.style.display = 'block';
+                    contextInput.style.display = 'none';
+                    document.getElementById('title').required = true;
+                    document.getElementById('context').required = false;
+                } else {
+                    titleInput.style.display = 'none';
+                    contextInput.style.display = 'block';
+                    document.getElementById('title').required = false;
+                    document.getElementById('context').required = true;
+                }
+            });
+        });
+
+        // Image preview
+        baseImageSelect.addEventListener('change', (e) => {
+            const fileId = e.target.value;
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (fileId) {
+                const imgUrl = `https://drive.google.com/uc?id=${fileId}`;
+                imagePreview.innerHTML = `<img src="${imgUrl}" alt="Preview" class="preview-img" onerror="this.parentElement.innerHTML='<span>Could not load preview</span>'">`;
+            } else {
+                imagePreview.innerHTML = '<span>Image preview will appear here</span>';
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = form.querySelector('.btn-primary');
+            const spinner = submitBtn.querySelector('.spinner');
+            const btnText = submitBtn.querySelector('.btn-text');
+
+            // Disable submit button
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Generating...';
+
+            // Show result section
+            resultSection.classList.add('active');
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('thumbnailDisplay').style.display = 'none';
+            document.getElementById('resultInfo').style.display = 'none';
+            document.getElementById('errorMessage').classList.remove('active');
+
+            try {
+                // Prepare form data
+                const formData = new FormData(form);
+                formData.append('contentType', contentType);
+                formData.append('primaryColor', document.getElementById('primaryColor').value);
+                formData.append('secondaryColor', document.getElementById('secondaryColor').value);
+
+                // Send to backend
+                const response = await fetch('/api/generate-thumbnail', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Display result
+                    document.getElementById('progressContainer').style.display = 'none';
+                    document.getElementById('thumbnailDisplay').style.display = 'block';
+                    document.getElementById('resultInfo').style.display = 'block';
+                    document.getElementById('thumbnailImg').src = data.imageUrl;
+                    document.getElementById('imageUrl').value = data.imageUrl;
+                    document.getElementById('generatedTime').textContent = new Date().toLocaleString();
+
+                    showSuccess('✓ Thumbnail generated successfully!');
+                } else {
+                    throw new Error(data.message || 'Failed to generate thumbnail');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError(`Failed to generate thumbnail: ${error.message}`);
+            } finally {
+                submitBtn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.textContent = 'Generate Thumbnail';
+            }
+        });
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('successMessage');
+            successEl.textContent = message;
+            successEl.classList.add('active');
+        }
+
+        function copyToClipboard() {
+            const urlInput = document.getElementById('imageUrl');
+            urlInput.select();
+            document.execCommand('copy');
+            alert('URL copied to clipboard!');
+        }
+
+        // Update progress bar (simulated)
+        function updateProgress(percent, text) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = text;
+        }
+
+        // Simulate progress
+        let progressInterval;
+        form.addEventListener('submit', () => {
+            let progress = 0;
+            progressInterval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) progress = 90;
+                updateProgress(progress, `Generating thumbnail (${Math.round(progress)}%)`);
+            }, 500);
+        });
+    </script>
+</body>
+</html>

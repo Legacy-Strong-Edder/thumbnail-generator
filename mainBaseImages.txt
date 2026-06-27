@@ -1,0 +1,74 @@
+# VEON Services - Base Images Library
+# Updated: 2026-06-27
+# Total Images: 25
+# All images are publicly accessible via Google Drive
+# Format: [INDEX] | [FILE_ID] | [LABEL] | [DESCRIPTION] | [BEST_FOR]
+# Access URL: https://drive.google.com/uc?id={FILE_ID}
+
+---
+
+[001] | 1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS | Professional_Portrait_01 | Serious professional portrait, centered, dark background | YouTube thumbnails, professional business content, credible personas
+[002] | 10HTWMVsULV7MqX2LU1FdD3NZ4vtMy280 | Professional_Portrait_02 | Professional headshot variation, neutral expression | B2B marketing, corporate content
+[003] | 1TG6RNveJF0jB0wDO0YNQqWlnQpHQCQB- | Professional_Portrait_03 | Professional portrait, clear face, business setting | Thumbnail designs, webinar covers
+[004] | 1Tze7ZHNJDzBPI4cCOqwEpnAdWgHFAmyq | Professional_Portrait_04 | Professional photo, good lighting, focused | YouTube content, social media profiles
+[005] | 1m45LRucK5gOmNtfRj_zaEj1obOsAKOJw | Professional_Portrait_05 | Portrait variation, professional appearance | Branding assets, professional profiles
+[006] | 1MSuATwcK22elJ1ZE3uMZd6xnXFRgsDlB | Professional_Portrait_06 | Professional headshot, clear facial features | Thumbnails, profile pictures
+[007] | 1bZZ0VyMnWxtXyBY-weeLdfTIiF-kBgTv | Professional_Portrait_07 | Serious professional photo, strong presence | Business video content, authority positioning
+[008] | 1Tfm_ChJorSkPvUhNArnRZcNKGSYG48cr | Professional_Portrait_08 | Professional portrait, clean background | Thumbnail overlays, design bases
+[009] | 1YLD81LE2HsGVPq4Ut_rsNDnou7wFjLy5 | Professional_Portrait_09 | Professional headshot, confident look | Social media, professional content
+[010] | 1pFN1qpCqc7xQy-Ffyc4P7tV4eUT8DoCB | Professional_Portrait_10 | Professional photo, direct gaze | YouTube videos, thumbnail designs
+[011] | 1pdrX3kRL8bvKF84_zcnjr_3s1sZTdfAu | Professional_Portrait_11 | Professional portrait variation | Webinars, online courses
+[012] | 1FWPeRlJvW8z1272uZiVAPjIWiAgJkhnr | Professional_Portrait_12 | Professional headshot, good contrast | Branding, professional designs
+[013] | 13eWwqIzQCQ7G7yjKeiPu8fGodXlTorIw | Professional_Portrait_13 | Professional photo, focused lighting | YouTube thumbnails, promotional content
+[014] | 182rlLZZ7anJFnsqMrW3lXWox2ursngl2 | Professional_Portrait_14 | Professional portrait, clear details | Thumbnail bases, design assets
+[015] | 1KggHzqU0UPZ-Weg9qS2mS_gVN-sC4AS6 | Professional_Portrait_15 | Professional headshot, professional appearance | Business content, profiles
+[016] | 1YTKDCUUkAkRhk00yBtB-nFkyjBrR696C | Professional_Portrait_16 | Professional photo, confident expression | Video thumbnails, social media
+[017] | 1Bjy9ztJ8Q297Bwb7Yh86T9kpI3Ypo_l- | Professional_Portrait_17 | Professional portrait, clean framing | Webinars, courses, tutorials
+[018] | 1nhMkGgapbDAaLKLrsKdaX3lr_zfwWClY | Professional_Portrait_18 | Professional headshot, neutral background | Professional designs, thumbnails
+[019] | 1vcJ63wnrfWDidb9mg_4SZ-sxl3O_IrO4 | Professional_Portrait_19 | Professional photo, strong lighting | YouTube content, promotional materials
+[020] | 1Q7yz6z0jY50m-Qcnp4wIigPIYK4jJEDA | Professional_Portrait_20 | Professional portrait, direct positioning | Thumbnail designs, business content
+[021] | 1WW_dzeS4oS0mO1G55LdiSu7EbJcVhYlK | Professional_Portrait_21 | Professional headshot, focused details | Video covers, social media
+[022] | 14YQij2Bz5rflzsUtmXERkq627k_n6Ql- | Professional_Portrait_22 | Professional photo, clear framing | YouTube thumbnails, webinars
+[023] | 1jr3OYSrrzH4KmQXIX4y6sVvKBEKUe5Uf | Professional_Portrait_23 | Professional portrait, good quality | Branding assets, courses
+[024] | 1UUe8AXRZo4ujH27ZgTpeMfptzP-cZBSh | Professional_Portrait_24 | Professional headshot, confident look | Professional content, thumbnails
+[025] | 13ZwHTTMIh29K8rqfLH5Bb2wRBnAxk64h | Professional_Portrait_25 | Professional photo, final variation | Video content, design bases
+
+---
+
+## USAGE GUIDE
+
+### Direct Download URL Format:
+```
+https://drive.google.com/uc?id={FILE_ID}
+```
+
+### Example:
+```
+https://drive.google.com/uc?id=1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS
+```
+
+### API Integration (Nano Banana 2):
+```json
+{
+  "model": "nano-banana-2",
+  "input": {
+    "prompt": "Create YouTube thumbnail...",
+    "image_input": ["https://drive.google.com/uc?id={FILE_ID}"],
+    "aspect_ratio": "16:9",
+    "resolution": "2K",
+    "output_format": "png"
+  }
+}
+```
+
+### Selection Tips:
+- **Business/Professional Content**: Use [001-010] (best lighting, professional appearance)
+- **YouTube Thumbnails**: Use [001], [003], [007], [010] (centered, clear faces)
+- **Webinars/Courses**: Use [011], [017], [023] (confident expressions)
+- **Branding**: Use [006], [012], [018] (neutral backgrounds)
+
+---
+
+Last Updated: 2026-06-27
+Library Status: ✓ Complete
+All Images: ✓ Verified & Accessible

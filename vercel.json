@@ -23,10 +23,5 @@
       "src": "/(.*)",
       "dest": "index.html"
     }
-  ],
-  "env": {
-    "NANO_BANANA_API_KEY": "@nano_banana_api_key",
-    "GOOGLE_DRIVE_FOLDER_ID": "@google_drive_folder_id",
-    "PORT": "3000"
-  }
+  ]
 }

@@ -23,31 +23,31 @@ const GOOGLE_DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || '1h781_9DkW
 
 // Image library
 const IMAGE_LIBRARY = {
-    '1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS': 'Professional Portrait 01',
-    '10HTWMVsULV7MqX2LU1FdD3NZ4vtMy280': 'Professional Portrait 02',
-    '1TG6RNveJF0jB0wDO0YNQqWlnQpHQCQB-': 'Professional Portrait 03',
-    '1Tze7ZHNJDzBPI4cCOqwEpnAdWgHFAmyq': 'Professional Portrait 04',
-    '1m45LRucK5gOmNtfRj_zaEj1obOsAKOJw': 'Professional Portrait 05',
-    '1MSuATwcK22elJ1ZE3uMZd6xnXFRgsDlB': 'Professional Portrait 06',
-    '1bZZ0VyMnWxtXyBY-weeLdfTIiF-kBgTv': 'Professional Portrait 07',
-    '1Tfm_ChJorSkPvUhNArnRZcNKGSYG48cr': 'Professional Portrait 08',
-    '1YLD81LE2HsGVPq4Ut_rsNDnou7wFjLy5': 'Professional Portrait 09',
-    '1pFN1qpCqc7xQy-Ffyc4P7tV4eUT8DoCB': 'Professional Portrait 10',
-    '1pdrX3kRL8bvKF84_zcnjr_3s1sZTdfAu': 'Professional Portrait 11',
-    '1FWPeRlJvW8z1272uZiVAPjIWiAgJkhnr': 'Professional Portrait 12',
-    '13eWwqIzQCQ7G7yjKeiPu8fGodXlTorIw': 'Professional Portrait 13',
-    '182rlLZZ7anJFnsqMrW3lXWox2ursngl2': 'Professional Portrait 14',
-    '1KggHzqU0UPZ-Weg9qS2mS_gVN-sC4AS6': 'Professional Portrait 15',
-    '1YTKDCUUkAkRhk00yBtB-nFkyjBrR696C': 'Professional Portrait 16',
-    '1Bjy9ztJ8Q297Bwb7Yh86T9kpI3Ypo_l-': 'Professional Portrait 17',
-    '1nhMkGgapbDAaLKLrsKdaX3lr_zfwWClY': 'Professional Portrait 18',
-    '1vcJ63wnrfWDidb9mg_4SZ-sxl3O_IrO4': 'Professional Portrait 19',
-    '1Q7yz6z0jY50m-Qcnp4wIigPIYK4jJEDA': 'Professional Portrait 20',
-    '1WW_dzeS4oS0mO1G55LdiSu7EbJcVhYlK': 'Professional Portrait 21',
-    '14YQij2Bz5rflzsUtmXERkq627k_n6Ql-': 'Professional Portrait 22',
-    '1jr3OYSrrzH4KmQXIX4y6sVvKBEKUe5Uf': 'Professional Portrait 23',
-    '1UUe8AXRZo4ujH27ZgTpeMfptzP-cZBSh': 'Professional Portrait 24',
-    '13ZwHTTMIh29K8rqfLH5Bb2wRBnAxk64h': 'Professional Portrait 25',
+    '/baseImages/IMG_0008.JPG': 'Portrait 01 - IMG_0008',
+    '/baseImages/IMG_0009.JPG': 'Portrait 02 - IMG_0009',
+    '/baseImages/IMG_0010.JPG': 'Portrait 03 - IMG_0010',
+    '/baseImages/IMG_0011.JPG': 'Portrait 04 - IMG_0011',
+    '/baseImages/IMG_0012.JPG': 'Portrait 05 - IMG_0012',
+    '/baseImages/IMG_0013.JPG': 'Portrait 06 - IMG_0013',
+    '/baseImages/IMG_0014.JPG': 'Portrait 07 - IMG_0014',
+    '/baseImages/IMG_0016.JPG': 'Portrait 08 - IMG_0016',
+    '/baseImages/IMG_0017.JPG': 'Portrait 09 - IMG_0017',
+    '/baseImages/IMG_0018.JPG': 'Portrait 10 - IMG_0018',
+    '/baseImages/IMG_0019.JPG': 'Portrait 11 - IMG_0019',
+    '/baseImages/IMG_0021.JPG': 'Portrait 12 - IMG_0021',
+    '/baseImages/challengingBlackShirt.JPG': 'Challenging Black Shirt',
+    '/baseImages/confirmingBlackShirt.jpg': 'Confirming Black Shirt',
+    '/baseImages/poadcastScenarioSerious.jpg': 'Podcast Scenario Serious',
+    '/baseImages/pointingAffirmative.JPG': 'Pointing Affirmative',
+    '/baseImages/questioning.JPG': 'Questioning',
+    '/baseImages/regular1.JPG': 'Regular 1',
+    '/baseImages/regularBlackShirt.JPG': 'Regular Black Shirt',
+    '/baseImages/regularPosture.JPG': 'Regular Posture',
+    '/baseImages/serious.JPG': 'Serious',
+    '/baseImages/seriousBlackShirt.JPG': 'Serious Black Shirt',
+    '/baseImages/smilyBlackShirt.JPG': 'Smily Black Shirt',
+    '/baseImages/smilyBlackShirt1.JPG': 'Smily Black Shirt 1',
+    '/baseImages/wiseBlackShirt.JPG': 'Wise Black Shirt',
 };
 
 // Utility Functions
@@ -244,13 +244,20 @@ app.post('/api/generate-thumbnail', async (req, res) => {
             finalTitle = await generateHookTitle(context, keywords);
         }
 
-        // Build image URL
-        const imageUrl = `https://drive.google.com/uc?id=${baseImage}`;
+        // Build image URL - handle local file paths
+        let imageUrl = baseImage;
+        if (baseImage.startsWith('/baseImages/')) {
+            // For local images, construct the full URL based on server location
+            const host = req.get('host') || 'localhost:3000';
+            const protocol = req.protocol || 'http';
+            imageUrl = `${protocol}://${host}${baseImage}`;
+        }
 
         console.log(`\n🎬 Generating thumbnail:`);
         console.log(`   Title: ${finalTitle}`);
         console.log(`   Subtitle: ${subtitle}`);
         console.log(`   Image: ${IMAGE_LIBRARY[baseImage]}`);
+        console.log(`   Image URL: ${imageUrl}`);
 
         // Create Nano Banana task
         console.log(`\n📡 Creating Nano Banana task...`);

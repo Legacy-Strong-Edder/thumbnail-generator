@@ -438,31 +438,31 @@
                     <label>Select Base Image</label>
                     <select id="baseImage" name="baseImage" required>
                         <option value="">-- Choose an image --</option>
-                        <option value="1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS">Professional Portrait 01</option>
-                        <option value="10HTWMVsULV7MqX2LU1FdD3NZ4vtMy280">Professional Portrait 02</option>
-                        <option value="1TG6RNveJF0jB0wDO0YNQqWlnQpHQCQB-">Professional Portrait 03</option>
-                        <option value="1Tze7ZHNJDzBPI4cCOqwEpnAdWgHFAmyq">Professional Portrait 04</option>
-                        <option value="1m45LRucK5gOmNtfRj_zaEj1obOsAKOJw">Professional Portrait 05</option>
-                        <option value="1MSuATwcK22elJ1ZE3uMZd6xnXFRgsDlB">Professional Portrait 06</option>
-                        <option value="1bZZ0VyMnWxtXyBY-weeLdfTIiF-kBgTv">Professional Portrait 07</option>
-                        <option value="1Tfm_ChJorSkPvUhNArnRZcNKGSYG48cr">Professional Portrait 08</option>
-                        <option value="1YLD81LE2HsGVPq4Ut_rsNDnou7wFjLy5">Professional Portrait 09</option>
-                        <option value="1pFN1qpCqc7xQy-Ffyc4P7tV4eUT8DoCB">Professional Portrait 10</option>
-                        <option value="1pdrX3kRL8bvKF84_zcnjr_3s1sZTdfAu">Professional Portrait 11</option>
-                        <option value="1FWPeRlJvW8z1272uZiVAPjIWiAgJkhnr">Professional Portrait 12</option>
-                        <option value="13eWwqIzQCQ7G7yjKeiPu8fGodXlTorIw">Professional Portrait 13</option>
-                        <option value="182rlLZZ7anJFnsqMrW3lXWox2ursngl2">Professional Portrait 14</option>
-                        <option value="1KggHzqU0UPZ-Weg9qS2mS_gVN-sC4AS6">Professional Portrait 15</option>
-                        <option value="1YTKDCUUkAkRhk00yBtB-nFkyjBrR696C">Professional Portrait 16</option>
-                        <option value="1Bjy9ztJ8Q297Bwb7Yh86T9kpI3Ypo_l-">Professional Portrait 17</option>
-                        <option value="1nhMkGgapbDAaLKLrsKdaX3lr_zfwWClY">Professional Portrait 18</option>
-                        <option value="1vcJ63wnrfWDidb9mg_4SZ-sxl3O_IrO4">Professional Portrait 19</option>
-                        <option value="1Q7yz6z0jY50m-Qcnp4wIigPIYK4jJEDA">Professional Portrait 20</option>
-                        <option value="1WW_dzeS4oS0mO1G55LdiSu7EbJcVhYlK">Professional Portrait 21</option>
-                        <option value="14YQij2Bz5rflzsUtmXERkq627k_n6Ql-">Professional Portrait 22</option>
-                        <option value="1jr3OYSrrzH4KmQXIX4y6sVvKBEKUe5Uf">Professional Portrait 23</option>
-                        <option value="1UUe8AXRZo4ujH27ZgTpeMfptzP-cZBSh">Professional Portrait 24</option>
-                        <option value="13ZwHTTMIh29K8rqfLH5Bb2wRBnAxk64h">Professional Portrait 25</option>
+                        <option value="/baseImages/IMG_0008.JPG">Portrait 01 - IMG_0008</option>
+                        <option value="/baseImages/IMG_0009.JPG">Portrait 02 - IMG_0009</option>
+                        <option value="/baseImages/IMG_0010.JPG">Portrait 03 - IMG_0010</option>
+                        <option value="/baseImages/IMG_0011.JPG">Portrait 04 - IMG_0011</option>
+                        <option value="/baseImages/IMG_0012.JPG">Portrait 05 - IMG_0012</option>
+                        <option value="/baseImages/IMG_0013.JPG">Portrait 06 - IMG_0013</option>
+                        <option value="/baseImages/IMG_0014.JPG">Portrait 07 - IMG_0014</option>
+                        <option value="/baseImages/IMG_0016.JPG">Portrait 08 - IMG_0016</option>
+                        <option value="/baseImages/IMG_0017.JPG">Portrait 09 - IMG_0017</option>
+                        <option value="/baseImages/IMG_0018.JPG">Portrait 10 - IMG_0018</option>
+                        <option value="/baseImages/IMG_0019.JPG">Portrait 11 - IMG_0019</option>
+                        <option value="/baseImages/IMG_0021.JPG">Portrait 12 - IMG_0021</option>
+                        <option value="/baseImages/challengingBlackShirt.JPG">Challenging Black Shirt</option>
+                        <option value="/baseImages/confirmingBlackShirt.jpg">Confirming Black Shirt</option>
+                        <option value="/baseImages/poadcastScenarioSerious.jpg">Podcast Scenario Serious</option>
+                        <option value="/baseImages/pointingAffirmative.JPG">Pointing Affirmative</option>
+                        <option value="/baseImages/questioning.JPG">Questioning</option>
+                        <option value="/baseImages/regular1.JPG">Regular 1</option>
+                        <option value="/baseImages/regularBlackShirt.JPG">Regular Black Shirt</option>
+                        <option value="/baseImages/regularPosture.JPG">Regular Posture</option>
+                        <option value="/baseImages/serious.JPG">Serious</option>
+                        <option value="/baseImages/seriousBlackShirt.JPG">Serious Black Shirt</option>
+                        <option value="/baseImages/smilyBlackShirt.JPG">Smily Black Shirt</option>
+                        <option value="/baseImages/smilyBlackShirt1.JPG">Smily Black Shirt 1</option>
+                        <option value="/baseImages/wiseBlackShirt.JPG">Wise Black Shirt</option>
                     </select>
                     <div class="image-preview" id="imagePreview">
                         <span>Image preview will appear here</span>
@@ -557,12 +557,11 @@
 
         // Image preview
         baseImageSelect.addEventListener('change', (e) => {
-            const fileId = e.target.value;
+            const imagePath = e.target.value;
             const imagePreview = document.getElementById('imagePreview');
 
-            if (fileId) {
-                const imgUrl = `/api/image-proxy?id=${fileId}`;
-                imagePreview.innerHTML = `<img src="${imgUrl}" alt="Preview" class="preview-img" onerror="this.parentElement.innerHTML='<span>Could not load preview</span>'">`;
+            if (imagePath) {
+                imagePreview.innerHTML = `<img src="${imagePath}" alt="Preview" class="preview-img" onerror="this.parentElement.innerHTML='<span>Could not load preview</span>'">`;
             } else {
                 imagePreview.innerHTML = '<span>Image preview will appear here</span>';
             }

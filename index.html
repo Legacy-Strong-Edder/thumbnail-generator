@@ -561,7 +561,7 @@
             const imagePreview = document.getElementById('imagePreview');
 
             if (fileId) {
-                const imgUrl = `https://drive.google.com/uc?id=${fileId}`;
+                const imgUrl = `/api/image-proxy?id=${fileId}`;
                 imagePreview.innerHTML = `<img src="${imgUrl}" alt="Preview" class="preview-img" onerror="this.parentElement.innerHTML='<span>Could not load preview</span>'">`;
             } else {
                 imagePreview.innerHTML = '<span>Image preview will appear here</span>';

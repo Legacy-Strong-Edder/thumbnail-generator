@@ -302,9 +302,34 @@ app.get('/api/images', (req, res) => {
         images: Object.entries(IMAGE_LIBRARY).map(([id, name]) => ({
             id,
             name,
-            url: `https://drive.google.com/uc?id=${id}`
+            url: `/api/image-proxy?id=${id}`
         }))
     });
+});
+
+app.get('/api/image-proxy', async (req, res) => {
+    try {
+        const { id } = req.query;
+        if (!id || !IMAGE_LIBRARY[id]) {
+            return res.status(400).json({ success: false, message: 'Invalid image ID' });
+        }
+
+        const imageUrl = `https://drive.google.com/uc?id=${id}`;
+        const response = await fetch(imageUrl);
+
+        if (!response.ok) {
+            return res.status(response.status).json({ success: false, message: 'Failed to fetch image' });
+        }
+
+        res.setHeader('Content-Type', response.headers.get('content-type') || 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+
+        response.body.pipe(res);
+    } catch (error) {
+        console.error('Proxy error:', error);
+        res.status(500).json({ success: false, message: 'Failed to proxy image' });
+    }
 });
 
 app.get('/api/health', (req, res) => {

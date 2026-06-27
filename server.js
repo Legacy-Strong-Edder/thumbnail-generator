@@ -23,31 +23,31 @@ const GOOGLE_DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || '1h781_9DkW
 
 // Image library
 const IMAGE_LIBRARY = {
-    '/baseImages/IMG_0008.JPG': 'Portrait 01 - IMG_0008',
-    '/baseImages/IMG_0009.JPG': 'Portrait 02 - IMG_0009',
-    '/baseImages/IMG_0010.JPG': 'Portrait 03 - IMG_0010',
-    '/baseImages/IMG_0011.JPG': 'Portrait 04 - IMG_0011',
-    '/baseImages/IMG_0012.JPG': 'Portrait 05 - IMG_0012',
-    '/baseImages/IMG_0013.JPG': 'Portrait 06 - IMG_0013',
-    '/baseImages/IMG_0014.JPG': 'Portrait 07 - IMG_0014',
-    '/baseImages/IMG_0016.JPG': 'Portrait 08 - IMG_0016',
-    '/baseImages/IMG_0017.JPG': 'Portrait 09 - IMG_0017',
-    '/baseImages/IMG_0018.JPG': 'Portrait 10 - IMG_0018',
-    '/baseImages/IMG_0019.JPG': 'Portrait 11 - IMG_0019',
-    '/baseImages/IMG_0021.JPG': 'Portrait 12 - IMG_0021',
-    '/baseImages/challengingBlackShirt.JPG': 'Challenging Black Shirt',
-    '/baseImages/confirmingBlackShirt.jpg': 'Confirming Black Shirt',
-    '/baseImages/poadcastScenarioSerious.jpg': 'Podcast Scenario Serious',
-    '/baseImages/pointingAffirmative.JPG': 'Pointing Affirmative',
-    '/baseImages/questioning.JPG': 'Questioning',
-    '/baseImages/regular1.JPG': 'Regular 1',
-    '/baseImages/regularBlackShirt.JPG': 'Regular Black Shirt',
-    '/baseImages/regularPosture.JPG': 'Regular Posture',
-    '/baseImages/serious.JPG': 'Serious',
-    '/baseImages/seriousBlackShirt.JPG': 'Serious Black Shirt',
-    '/baseImages/smilyBlackShirt.JPG': 'Smily Black Shirt',
-    '/baseImages/smilyBlackShirt1.JPG': 'Smily Black Shirt 1',
-    '/baseImages/wiseBlackShirt.JPG': 'Wise Black Shirt',
+    'baseImages/IMG_0008.JPG': 'Portrait 01 - IMG_0008',
+    'baseImages/IMG_0009.JPG': 'Portrait 02 - IMG_0009',
+    'baseImages/IMG_0010.JPG': 'Portrait 03 - IMG_0010',
+    'baseImages/IMG_0011.JPG': 'Portrait 04 - IMG_0011',
+    'baseImages/IMG_0012.JPG': 'Portrait 05 - IMG_0012',
+    'baseImages/IMG_0013.JPG': 'Portrait 06 - IMG_0013',
+    'baseImages/IMG_0014.JPG': 'Portrait 07 - IMG_0014',
+    'baseImages/IMG_0016.JPG': 'Portrait 08 - IMG_0016',
+    'baseImages/IMG_0017.JPG': 'Portrait 09 - IMG_0017',
+    'baseImages/IMG_0018.JPG': 'Portrait 10 - IMG_0018',
+    'baseImages/IMG_0019.JPG': 'Portrait 11 - IMG_0019',
+    'baseImages/IMG_0021.JPG': 'Portrait 12 - IMG_0021',
+    'baseImages/challengingBlackShirt.JPG': 'Challenging Black Shirt',
+    'baseImages/confirmingBlackShirt.jpg': 'Confirming Black Shirt',
+    'baseImages/poadcastScenarioSerious.jpg': 'Podcast Scenario Serious',
+    'baseImages/pointingAffirmative.JPG': 'Pointing Affirmative',
+    'baseImages/questioning.JPG': 'Questioning',
+    'baseImages/regular1.JPG': 'Regular 1',
+    'baseImages/regularBlackShirt.JPG': 'Regular Black Shirt',
+    'baseImages/regularPosture.JPG': 'Regular Posture',
+    'baseImages/serious.JPG': 'Serious',
+    'baseImages/seriousBlackShirt.JPG': 'Serious Black Shirt',
+    'baseImages/smilyBlackShirt.JPG': 'Smily Black Shirt',
+    'baseImages/smilyBlackShirt1.JPG': 'Smily Black Shirt 1',
+    'baseImages/wiseBlackShirt.JPG': 'Wise Black Shirt',
 };
 
 // Utility Functions
@@ -246,11 +246,12 @@ app.post('/api/generate-thumbnail', async (req, res) => {
 
         // Build image URL - handle local file paths
         let imageUrl = baseImage;
-        if (baseImage.startsWith('/baseImages/')) {
+        if (baseImage.startsWith('baseImages/') || baseImage.startsWith('/baseImages/')) {
             // For local images, construct the full URL based on server location
             const host = req.get('host') || 'localhost:3000';
             const protocol = req.protocol || 'http';
-            imageUrl = `${protocol}://${host}${baseImage}`;
+            const path = baseImage.startsWith('/') ? baseImage : `/${baseImage}`;
+            imageUrl = `${protocol}://${host}${path}`;
         }
 
         console.log(`\n🎬 Generating thumbnail:`);

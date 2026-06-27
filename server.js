@@ -33,6 +33,21 @@ const IMAGE_LIBRARY = {
     '1Tfm_ChJorSkPvUhNArnRZcNKGSYG48cr': 'Professional Portrait 08',
     '1YLD81LE2HsGVPq4Ut_rsNDnou7wFjLy5': 'Professional Portrait 09',
     '1pFN1qpCqc7xQy-Ffyc4P7tV4eUT8DoCB': 'Professional Portrait 10',
+    '1pdrX3kRL8bvKF84_zcnjr_3s1sZTdfAu': 'Professional Portrait 11',
+    '1FWPeRlJvW8z1272uZiVAPjIWiAgJkhnr': 'Professional Portrait 12',
+    '13eWwqIzQCQ7G7yjKeiPu8fGodXlTorIw': 'Professional Portrait 13',
+    '182rlLZZ7anJFnsqMrW3lXWox2ursngl2': 'Professional Portrait 14',
+    '1KggHzqU0UPZ-Weg9qS2mS_gVN-sC4AS6': 'Professional Portrait 15',
+    '1YTKDCUUkAkRhk00yBtB-nFkyjBrR696C': 'Professional Portrait 16',
+    '1Bjy9ztJ8Q297Bwb7Yh86T9kpI3Ypo_l-': 'Professional Portrait 17',
+    '1nhMkGgapbDAaLKLrsKdaX3lr_zfwWClY': 'Professional Portrait 18',
+    '1vcJ63wnrfWDidb9mg_4SZ-sxl3O_IrO4': 'Professional Portrait 19',
+    '1Q7yz6z0jY50m-Qcnp4wIigPIYK4jJEDA': 'Professional Portrait 20',
+    '1WW_dzeS4oS0mO1G55LdiSu7EbJcVhYlK': 'Professional Portrait 21',
+    '14YQij2Bz5rflzsUtmXERkq627k_n6Ql-': 'Professional Portrait 22',
+    '1jr3OYSrrzH4KmQXIX4y6sVvKBEKUe5Uf': 'Professional Portrait 23',
+    '1UUe8AXRZo4ujH27ZgTpeMfptzP-cZBSh': 'Professional Portrait 24',
+    '13ZwHTTMIh29K8rqfLH5Bb2wRBnAxk64h': 'Professional Portrait 25',
 };
 
 // Utility Functions

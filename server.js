@@ -71,7 +71,36 @@ async function generateHookTitle(context, keywords) {
     return `The ${keywords} Framework Nobody Knows About`;
 }
 
-async function createNanoBananaTask(imageUrl, title, subtitle, primaryColor, secondaryColor) {
+// Mapping of local image paths to Google Drive IDs for Nano Banana
+const LOCAL_TO_DRIVE_MAP = {
+    'baseImages/IMG_0008.JPG': '1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS',
+    'baseImages/IMG_0009.JPG': '10HTWMVsULV7MqX2LU1FdD3NZ4vtMy280',
+    'baseImages/IMG_0010.JPG': '1TG6RNveJF0jB0wDO0YNQqWlnQpHQCQB-',
+    'baseImages/IMG_0011.JPG': '1Tze7ZHNJDzBPI4cCOqwEpnAdWgHFAmyq',
+    'baseImages/IMG_0012.JPG': '1m45LRucK5gOmNtfRj_zaEj1obOsAKOJw',
+    'baseImages/IMG_0013.JPG': '1MSuATwcK22elJ1ZE3uMZd6xnXFRgsDlB',
+    'baseImages/IMG_0014.JPG': '1bZZ0VyMnWxtXyBY-weeLdfTIiF-kBgTv',
+    'baseImages/IMG_0016.JPG': '1Tfm_ChJorSkPvUhNArnRZcNKGSYG48cr',
+    'baseImages/IMG_0017.JPG': '1YLD81LE2HsGVPq4Ut_rsNDnou7wFjLy5',
+    'baseImages/IMG_0018.JPG': '1pFN1qpCqc7xQy-Ffyc4P7tV4eUT8DoCB',
+    'baseImages/IMG_0019.JPG': '1pdrX3kRL8bvKF84_zcnjr_3s1sZTdfAu',
+    'baseImages/IMG_0021.JPG': '1FWPeRlJvW8z1272uZiVAPjIWiAgJkhnr',
+    'baseImages/challengingBlackShirt.JPG': '13eWwqIzQCQ7G7yjKeiPu8fGodXlTorIw',
+    'baseImages/confirmingBlackShirt.jpg': '182rlLZZ7anJFnsqMrW3lXWox2ursngl2',
+    'baseImages/poadcastScenarioSerious.jpg': '1KggHzqU0UPZ-Weg9qS2mS_gVN-sC4AS6',
+    'baseImages/pointingAffirmative.JPG': '1YTKDCUUkAkRhk00yBtB-nFkyjBrR696C',
+    'baseImages/questioning.JPG': '1Bjy9ztJ8Q297Bwb7Yh86T9kpI3Ypo_l-',
+    'baseImages/regular1.JPG': '1nhMkGgapbDAaLKLrsKdaX3lr_zfwWClY',
+    'baseImages/regularBlackShirt.JPG': '1vcJ63wnrfWDidb9mg_4SZ-sxl3O_IrO4',
+    'baseImages/regularPosture.JPG': '1Q7yz6z0jY50m-Qcnp4wIigPIYK4jJEDA',
+    'baseImages/serious.JPG': '1WW_dzeS4oS0mO1G55LdiSu7EbJcVhYlK',
+    'baseImages/seriousBlackShirt.JPG': '14YQij2Bz5rflzsUtmXERkq627k_n6Ql-',
+    'baseImages/smilyBlackShirt.JPG': '1jr3OYSrrzH4KmQXIX4y6sVvKBEKUe5Uf',
+    'baseImages/smilyBlackShirt1.JPG': '1UUe8AXRZo4ujH27ZgTpeMfptzP-cZBSh',
+    'baseImages/wiseBlackShirt.JPG': '13ZwHTTMIh29K8rqfLH5Bb2wRBnAxk64h',
+};
+
+async function createNanoBananaTask(imagePath, title, subtitle, primaryColor, secondaryColor) {
     const prompt = `
 Create a professional YouTube thumbnail (1280x720px) with CREATIVE professional positioning.
 
@@ -105,6 +134,17 @@ COMPOSITION:
 
 DIMENSIONS: 1280x720px PNG, 2K resolution
 `;
+
+    // Convert local path to Google Drive URL for Nano Banana
+    let imageUrl = imagePath;
+    if (imagePath.startsWith('baseImages/') || imagePath.startsWith('/baseImages/')) {
+        const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
+        const driveId = LOCAL_TO_DRIVE_MAP[cleanPath];
+        if (!driveId) {
+            throw new Error(`No Google Drive ID mapping found for ${cleanPath}`);
+        }
+        imageUrl = `https://drive.google.com/uc?id=${driveId}`;
+    }
 
     const payload = {
         model: 'nano-banana-2',
@@ -244,26 +284,15 @@ app.post('/api/generate-thumbnail', async (req, res) => {
             finalTitle = await generateHookTitle(context, keywords);
         }
 
-        // Build image URL - handle local file paths
-        let imageUrl = baseImage;
-        if (baseImage.startsWith('baseImages/') || baseImage.startsWith('/baseImages/')) {
-            // For local images, construct the full URL based on server location
-            const host = req.get('host') || 'localhost:3000';
-            const protocol = req.protocol || 'http';
-            const path = baseImage.startsWith('/') ? baseImage : `/${baseImage}`;
-            imageUrl = `${protocol}://${host}${path}`;
-        }
-
         console.log(`\n🎬 Generating thumbnail:`);
         console.log(`   Title: ${finalTitle}`);
         console.log(`   Subtitle: ${subtitle}`);
         console.log(`   Image: ${IMAGE_LIBRARY[baseImage]}`);
-        console.log(`   Image URL: ${imageUrl}`);
 
         // Create Nano Banana task
         console.log(`\n📡 Creating Nano Banana task...`);
         const taskId = await createNanoBananaTask(
-            imageUrl,
+            baseImage,
             finalTitle,
             subtitle,
             primaryColor || '#75BF80',

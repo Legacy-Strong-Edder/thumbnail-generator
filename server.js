@@ -100,7 +100,7 @@ const LOCAL_TO_DRIVE_MAP = {
     'baseImages/wiseBlackShirt.JPG': '13ZwHTTMIh29K8rqfLH5Bb2wRBnAxk64h',
 };
 
-async function createNanoBananaTask(imagePath, title, subtitle, primaryColor, secondaryColor) {
+async function createNanoBananaTask(imagePath, title, subtitle, primaryColor, secondaryColor, req) {
     const prompt = `
 Create a professional YouTube thumbnail (1280x720px) with CREATIVE professional positioning.
 
@@ -135,16 +135,29 @@ COMPOSITION:
 DIMENSIONS: 1280x720px PNG, 2K resolution
 `;
 
-    // Convert local path to Google Drive URL for Nano Banana
+    // Build image URL for Nano Banana
     let imageUrl = imagePath;
     if (imagePath.startsWith('baseImages/') || imagePath.startsWith('/baseImages/')) {
         const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
-        const driveId = LOCAL_TO_DRIVE_MAP[cleanPath];
-        if (!driveId) {
-            throw new Error(`No Google Drive ID mapping found for ${cleanPath}`);
+
+        // Prefer GitHub Pages public URL if available
+        const host = req?.get('host') || 'localhost:3000';
+        const protocol = req?.protocol || 'http';
+
+        if (host.includes('github.io')) {
+            // Use GitHub Pages public URL
+            imageUrl = `https://${host}/thumbnail-generator/${cleanPath}`;
+        } else {
+            // Fall back to Google Drive for localhost
+            const driveId = LOCAL_TO_DRIVE_MAP[cleanPath];
+            if (!driveId) {
+                throw new Error(`No Google Drive ID mapping found for ${cleanPath}`);
+            }
+            imageUrl = `https://drive.google.com/uc?id=${driveId}`;
         }
-        imageUrl = `https://drive.google.com/uc?id=${driveId}`;
     }
+
+    console.log(`   Using image URL: ${imageUrl}`);
 
     const payload = {
         model: 'nano-banana-2',
@@ -296,7 +309,8 @@ app.post('/api/generate-thumbnail', async (req, res) => {
             finalTitle,
             subtitle,
             primaryColor || '#75BF80',
-            secondaryColor || '#FFFFFF'
+            secondaryColor || '#FFFFFF',
+            req
         );
 
         console.log(`✓ Task ID: ${taskId}`);

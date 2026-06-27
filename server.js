@@ -402,13 +402,15 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`\n🚀 Thumbnail Generator Server`);
-    console.log(`📍 Running on http://localhost:${PORT}`);
-    console.log(`\n✓ API Key configured: ${NANO_BANANA_API_KEY ? 'Yes' : 'No'}`);
-    console.log(`✓ Google Drive Folder: ${GOOGLE_DRIVE_FOLDER_ID}`);
-    console.log(`\n📂 Open http://localhost:${PORT} in your browser to start generating thumbnails\n`);
-});
+// Start server (only in development, not on Vercel)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`\n🚀 Thumbnail Generator Server`);
+        console.log(`📍 Running on http://localhost:${PORT}`);
+        console.log(`\n✓ API Key configured: ${NANO_BANANA_API_KEY ? 'Yes' : 'No'}`);
+        console.log(`✓ Google Drive Folder: ${GOOGLE_DRIVE_FOLDER_ID}`);
+        console.log(`\n📂 Open http://localhost:${PORT} in your browser to start generating thumbnails\n`);
+    });
+}
 
 module.exports = app;

@@ -1,8 +1,32 @@
 {
-  "buildCommand": "npm install",
-  "devCommand": "npm start",
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/baseImages/(.*)",
+      "dest": "/baseImages/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "index.html"
+    }
+  ],
   "env": {
     "NANO_BANANA_API_KEY": "@nano_banana_api_key",
-    "GOOGLE_DRIVE_FOLDER_ID": "@google_drive_folder_id"
+    "GOOGLE_DRIVE_FOLDER_ID": "@google_drive_folder_id",
+    "PORT": "3000"
   }
 }

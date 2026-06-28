@@ -589,7 +589,7 @@
 
             try {
                 // Prepare JSON data
-                const data = {
+                const requestData = {
                     title: document.getElementById('title').value,
                     context: document.getElementById('context').value,
                     subtitle: document.getElementById('subtitle').value,
@@ -606,7 +606,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(requestData)
                 });
 
                 if (!response.ok) {

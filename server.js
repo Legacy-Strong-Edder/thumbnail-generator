@@ -14,7 +14,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files
 app.use(express.static(path.join(__dirname)));
+app.use('/baseImages', express.static(path.join(__dirname, 'baseImages')));
 
 // Constants
 const NANO_BANANA_API_KEY = process.env.NANO_BANANA_API_KEY;

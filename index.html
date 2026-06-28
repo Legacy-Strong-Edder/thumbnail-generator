@@ -588,16 +588,25 @@
             document.getElementById('errorMessage').classList.remove('active');
 
             try {
-                // Prepare form data
-                const formData = new FormData(form);
-                formData.append('contentType', contentType);
-                formData.append('primaryColor', document.getElementById('primaryColor').value);
-                formData.append('secondaryColor', document.getElementById('secondaryColor').value);
+                // Prepare JSON data
+                const data = {
+                    title: document.getElementById('title').value,
+                    context: document.getElementById('context').value,
+                    subtitle: document.getElementById('subtitle').value,
+                    keywords: document.getElementById('keywords').value,
+                    baseImage: document.getElementById('baseImage').value,
+                    contentType: contentType,
+                    primaryColor: document.getElementById('primaryColor').value,
+                    secondaryColor: document.getElementById('secondaryColor').value
+                };
 
                 // Send to backend
                 const response = await fetch('/api/generate-thumbnail', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
                 });
 
                 if (!response.ok) {

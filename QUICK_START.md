@@ -1,190 +1,142 @@
-# ⚡ Quick Start Guide
+# Quick Start Guide
 
-Get the Thumbnail Generator running in 5 minutes.
+Get up and running in 5 minutes.
 
-## Prerequisites
+## 🎯 For Users (Team Members)
 
-- Node.js 14+ ([Download](https://nodejs.org/))
-- npm (comes with Node.js)
-- Already have: Nano Banana 2 API key `297d71aa27179935e1799360cd574bad`
+### Using the App
+1. **Go to:** https://thumbnail-generator-wfdm134.vercel.app/
+2. **Select** a base image from dropdown (preview loads on right)
+3. **Fill out form:**
+   - Title: What's your video about? (e.g., "How to Build Fast")
+   - Subtitle: Secondary message (e.g., "The Ultimate Guide")
+   - Keywords: Tags (e.g., "building,startup")
+   - Primary Color: Pick a color (default: #75bf80)
+4. **Click** "Generate Thumbnail"
+5. **Wait** 5-10 minutes (progress bar shows status)
+6. **Download** when ready
 
-## 1. Install Dependencies (2 minutes)
-
-```bash
-cd /Users/edderflores/Downloads/thumbNails_LLS
-npm install
-```
-
-## 2. Configure Environment (1 minute)
-
-```bash
-# Copy template
-cp .env.example .env
-
-# No changes needed - API key is already in .env.example
-# But you can customize if needed
-```
-
-## 3. Start Server (30 seconds)
-
-```bash
-npm start
-```
-
-You should see:
-```
-🚀 Thumbnail Generator Server
-📍 Running on http://localhost:3000
-```
-
-## 4. Open in Browser (30 seconds)
-
-Go to: **http://localhost:3000**
-
-You'll see the form with:
-- Video information fields
-- Image selector (10 professional portraits)
-- Color customization
-- Generate button
-
-## 5. Generate Your First Thumbnail!
-
-1. **Fill the form:**
-   - Content Type: Choose "Specific Title" or "Video Context"
-   - Title: "Thin Profiles"
-   - Subtitle: "Young, Foreign, Repair"
-   - Select base image: "Professional Portrait 01"
-   - Click "Generate Thumbnail"
-
-2. **Wait for generation** (20-60 seconds)
-   - Progress bar shows status
-   - Image appears when ready
-
-3. **Download or copy URL**
-   - See the generated thumbnail
-   - Copy URL to clipboard
-   - Download to your device
-
-## Development Mode (with auto-reload)
-
-```bash
-npm run dev
-```
-
-Changes to `server.js` automatically restart the server.
-
-## Forms Fields Explained
-
-### Content Type
-- **Specific Title**: Use exact text for thumbnail
-- **Video Context**: Provide description, AI generates hook
-
-### Title/Context
-- **Title**: Exact text to display (if Specific Title)
-- **Context**: Video description (if Video Context)
-
-### Subtitle/Keywords
-- Comma-separated keywords/secondary text
-- Example: "Young, Foreign, Repair"
-
-### Base Image
-- Select from 10 professional portraits
-- All on Google Drive, instant preview
-
-### Colors
-- **Primary**: Main brand color (default: #75BF80 green)
-- **Secondary**: Contrast color (default: #FFFFFF white)
-
-## API (For Developers)
-
-### Generate Thumbnail
-
-```bash
-curl -X POST http://localhost:3000/api/generate-thumbnail \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "contentType=title&title=Thin Profiles&subtitle=Young, Foreign, Repair&baseImage=1yb6_S9NYKdPH4f1ITn2hOq124XvUzrrS"
-```
-
-Response:
-```json
-{
-  "success": true,
-  "imageUrl": "https://...",
-  "title": "Thin Profiles",
-  "subtitle": "Young, Foreign, Repair",
-  "generatedAt": "2024-06-27T15:30:45.123Z"
-}
-```
-
-### Get Image Library
-
-```bash
-curl http://localhost:3000/api/images
-```
-
-## Files Structure
-
-```
-.
-├── index.html           ← Web form (open in browser)
-├── server.js            ← Backend API
-├── package.json         ← Dependencies
-├── .env                 ← API keys (don't commit)
-├── .env.example         ← Template
-├── .gitignore           ← Git ignore rules
-├── README.md            ← Full documentation
-├── DEPLOYMENT.md        ← Deploy to production
-└── QUICK_START.md       ← This file
-```
-
-## Common Issues
-
-### "Cannot find module 'express'"
-```bash
-npm install
-```
-
-### "Port 3000 already in use"
-```bash
-# Change port in .env
-PORT=3001
-```
-
-### "API Error: Unauthorized"
-- Check API key in `.env`
-- Should be: `297d71aa27179935e1799360cd574bad`
-
-### "Image not loading"
-- Check internet connection
-- Try a different base image
-- Refresh the page
-
-## Next Steps
-
-1. ✅ Server running? Great!
-2. 📝 Generate your first thumbnail
-3. 📤 Copy/download the result
-4. 🚀 Deploy to GitHub (see DEPLOYMENT.md)
-5. 🌐 Deploy to production (Heroku, AWS, etc.)
-
-## Production Deployment
-
-When ready to go live:
-
-```bash
-# See DEPLOYMENT.md for detailed instructions
-# Quick option: Deploy to Heroku in 5 minutes
-```
-
-## Support
-
-- 📖 Full docs: See `README.md`
-- 🚀 Deploy guide: See `DEPLOYMENT.md`
-- 🐛 Issues: Check console for error messages
-- 💬 Help: Contact support@veonservices.com
+### Tips
+- ✅ Use high-contrast titles for readability
+- ✅ Keep text short (20-30 characters)
+- ✅ Test preview image before generating
+- ✅ Generate multiple versions to compare
 
 ---
 
-**You're all set!** 🎉
+## 👨‍💻 For Developers (Setup)
 
-Open http://localhost:3000 and start generating thumbnails.
+### Prerequisites
+- Node.js 18+ (Download: https://nodejs.org/)
+- Git (Download: https://git-scm.com/)
+
+### Setup (2 minutes)
+```bash
+# 1. Clone
+git clone https://github.com/legacy-strong-edder/thumbnail-generator.git
+cd thumbnail-generator
+
+# 2. Install
+npm install
+
+# 3. Create .env file
+cp .env.example .env
+# Edit .env with your API keys
+
+# 4. Start
+npm run dev
+
+# 5. Open browser
+open http://localhost:3000
+```
+
+### Common Commands
+```bash
+npm run dev    # Start dev server (auto-reload)
+npm start      # Start production server
+npm test       # Run tests
+```
+
+### File Locations
+- **Frontend:** `index.html`
+- **Backend:** `server.js`
+- **Config:** `vercel.json`, `.env`
+- **Images:** `baseImages/`
+
+---
+
+## 🚀 For DevOps (Deployment)
+
+### Deploy to Vercel
+```bash
+# Option 1: Auto (already configured)
+git push origin main  # Vercel auto-deploys in 2-3 min
+
+# Option 2: Manual
+vercel deploy --prod
+```
+
+### Check Status
+```bash
+# View deployment logs
+vercel logs --tail
+
+# View deployments
+vercel ls
+```
+
+### Set Environment Variables
+```bash
+# Via Vercel CLI
+vercel env add NANO_BANANA_API_KEY
+vercel env add GOOGLE_DRIVE_FOLDER_ID
+
+# Or via Vercel web dashboard:
+# https://vercel.com/dashboard → Project → Settings → Environment Variables
+```
+
+---
+
+## 🆘 Troubleshooting
+
+### Images not loading?
+```bash
+# 1. Clear browser cache: Ctrl+Shift+Del
+# 2. Hard refresh: Ctrl+Shift+R
+# 3. Check console: F12 → Console tab
+```
+
+### Thumbnail generation fails?
+```bash
+# 1. Check API key in Vercel dashboard
+# 2. Verify env variable is UPPERCASE: NANO_BANANA_API_KEY
+# 3. Check logs: vercel logs --tail
+```
+
+### Form won't submit?
+```bash
+# 1. Open DevTools: F12
+# 2. Check Console for errors
+# 3. Verify all form fields are filled
+```
+
+### Deployment stuck?
+```bash
+# Force redeploy
+git commit --allow-empty -m "Force redeploy"
+git push origin main
+```
+
+---
+
+## 📚 Full Documentation
+
+See **DOCUMENTATION.md** for complete setup, architecture, and API details.
+
+---
+
+## 📞 Need Help?
+
+- **Bug:** Open GitHub issue
+- **Question:** Slack #dev-support
+- **Deployment Issue:** Slack #devops
